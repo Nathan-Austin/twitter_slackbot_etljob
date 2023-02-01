@@ -1,89 +1,89 @@
 # twitter_slackbot_etljob
-A twitter slackbot that reposts tweets from twitter to slack using MongoDB and Docker.
+A Dockerized twitter slackbot that reposts tweets about the AllBlacks (NZ Rugby) from twitter to slack using MongoDB to interact with the Twitter API and a PostgreSQL database.
+
+![image](https://user-images.githubusercontent.com/105222741/216148400-a96b278a-2a97-4796-b58c-cb05f5ae8d85.png)
+
+
 
 # To run:
+First create a new virtual environment.
+> conda create --name {your_env_name} python=3.8
 
 Clone this repository to your local directory.
+> git clone https://github.com/Nathan-Austin/twitter_slackbot_etljob.git
+
 Install Docker and Docker dependencies such as Docker Desktop
 Go to the [Docker Documentation](https://docs.docker.com/), find the installation instructions and install Docker CE.
 
-## First, create a new container from an existing image
+####Goto the cloned directory 
+In the Terminal run:
 
-$docker run -d -it --name {slackbot} python:3.8  {add yourown container name}
+> nano .env
 
-Connect to a container
+This will create a new .env file and inside this you need to add your secret information:
 
-You can attach a terminal to a container and see what is going on inside.
+> BEARER_TOKEN = "your token here"   # this is from twitter, see below for more details
 
-$docker attach slackbot
+> WEBHOOK_URL =  "your token here"   # this is from slack, see below for more details
 
-To detach the terminal (without killing the process), press CTRL-p followed by CTRL-q.
+> POSTGRES_USER = "your token here"
 
-Useful Docker Commands
-command                                             description
+> POSTGRES_PASSWORD=  "your token here"
 
-docker images                                       ist all installed images
 
-docker ps -a                                        list all running and stopped containers
+### TWITTER API TOKEN
 
-docker run <image>                                  start a new container
+Step 1: Get a Twitter Bearer Token
 
-docker exec                                         run a command inside a container
+2: Register your application on apps.twitter.com.
 
-docker attach                                       connect to an interactive container
+3: Navigate to the Twitter App dashboard and open the Twitter App for which you would like to generate access tokens.
 
-docker inspect <id or name>                         provide more details about running container (e.g. IP address)
+4: Navigate to the “keys and tokens” page.
 
-docker rmi <id or name>                             remove an image
+5: You’ll find the API keys, user Access Tokens, and Bearer Token on this page.
 
-docker rm <id or name>                              remove a container
+6: Write down the Bearer Token
 
-## Build your own image using Docker
 
-Use the Dockerfile provided inthe repo or create your own Dockerfile
+### SLACK WEBHOOK_URL
 
-Use an official Python runtime as a parent image
-FROM python:3.6
 
-Set the working directory to /app
-WORKDIR /app
+To build a Slack Bot, you need to:
 
-Copy the requirements file into the container at /app
-(a text files with all the libraries you want to install)
-COPY requirements.txt /app
+Login and go to [Your Apps](https://api.slack.com/apps)
 
-Install any needed packages specified in requirements.txt
-RUN pip install --trusted-host pypi.python.org -r requirements.txt
+Choose Create New App
 
-Run app.py when the container launches
-CMD ["python", "app.py"]
+Choose the option From scratch
 
-## Create the image from this file with:
+Fill in a name and choose your slack workspace as Development Slack Workspace
 
-docker build -t slackbot .
+Press Create App
 
-## Run it using the command below:
+Under Add features and functionality click on Incoming Webhooks
 
-docker run -it -v /some/local/path/:/app/ slackbot
+Activate incoming webhooks by clicking on the switch
 
-The -v option “borrows” a local directory to the container. It is a practical way to exchange files without rebuilding the image.
+Click on Add new webhook to the workspace at the bottom of the page
 
-Hint Pro-tip:
-You can write $PWD instead of /some/local/path/ as a placeholder for your actual current working directory.
+Select a channel where you want to post messages and click on Allow
 
-## Build a Pipeline with Docker-Compose
+Scroll down and copy the Webohook URL into the code:
+  
 
-In the project, we will use docker-compose to orchestrate a data pipeline with five containers:
+### Then in the terminal run:
 
-name                image               description
+> docker-compose build
+> docker-compose up
 
-tweet_collector     self-made           collects tweets and stores them in MongoDB
+This will start the container. 
 
-mongodb             mongo               stores tweets as JSON documents
+It is currently set to repost a randomly selected tweet every 60 seconds. You can change thi time by adjusting the sleep time at the 
+bottom of each .py file.
+You can remove the limit &/or random in the sql query in the slack.py file.
+You can also adjust the content in the get_tweets.py file byt changing the username form 'allblacks' ( the NZ natioanl rugby team).
 
-etl_job             self-made           analyzes sentiment of tweets from MongoDB and stores them in PostgreSQL
 
-postgresdb          postgres            stores tweets and annotation in a table
 
-slack_bot           self-made           publishes highly ranking tweets in a Slack channel
 
