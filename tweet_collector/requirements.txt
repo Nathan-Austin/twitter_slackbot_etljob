@@ -1,0 +1,5 @@
+tweepy==4.4.0
+pymongo
+dnspython
+python-dotenv
+pandas==1.5.3

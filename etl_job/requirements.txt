@@ -1,0 +1,6 @@
+pymongo
+sqlalchemy ==1.4.46
+psycopg2-binary
+pandas==1.5.3
+vaderSentiment
+python-dotenv 

@@ -1,8 +1,8 @@
 import tweepy
 import os
-from dotenv import load_dotenv
 import pymongo
 import time
+from dotenv import load_dotenv
 load_dotenv()
 
 client = pymongo.MongoClient(host="mongodb", port=27017)
@@ -12,7 +12,7 @@ db = client.twitterdb
 BEARER_TOKEN = os.getenv('BEARER_TOKEN')
 
 
-client = tweepy.Client(
+client = tweepy.Client(  
     bearer_token=BEARER_TOKEN,
     wait_on_rate_limit=True,
 )

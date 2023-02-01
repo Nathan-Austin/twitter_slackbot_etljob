@@ -1,0 +1,8 @@
+slackclient
+sqlalchemy ==1.4.46
+psycopg2-binary
+vaderSentiment
+pymongo
+pyjokes
+python-dotenv 
+pandas==1.5.3

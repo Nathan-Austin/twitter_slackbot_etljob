@@ -71,3 +71,19 @@ The -v option “borrows” a local directory to the container. It is a practica
 Hint Pro-tip:
 You can write $PWD instead of /some/local/path/ as a placeholder for your actual current working directory.
 
+## Build a Pipeline with Docker-Compose
+
+In the project, we will use docker-compose to orchestrate a data pipeline with five containers:
+
+name                image               description
+
+tweet_collector     self-made           collects tweets and stores them in MongoDB
+
+mongodb             mongo               stores tweets as JSON documents
+
+etl_job             self-made           analyzes sentiment of tweets from MongoDB and stores them in PostgreSQL
+
+postgresdb          postgres            stores tweets and annotation in a table
+
+slack_bot           self-made           publishes highly ranking tweets in a Slack channel
+
