@@ -7,8 +7,8 @@ from dotenv import load_dotenv
 load_dotenv()
 
 """posgresql connection"""
-USER = os.getenv("POSTGRES_USER")
-PASSWORD = os.getenv("POSTGRES_PASSWORD")
+USER = os.getenv('POSTGRES_USER')
+PASSWORD = os.getenv('POSTGRES_PASSWORD')
 
 
 s  = SentimentIntensityAnalyzer()
@@ -36,5 +36,5 @@ while True:
         query = "INSERT INTO tweets VALUES (%s, %s);"
         pg.execute(query, (text, score))
         print(doc)
-    time.sleep(3600)
+    time.sleep(60)
 

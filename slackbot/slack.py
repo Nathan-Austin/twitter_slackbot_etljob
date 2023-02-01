@@ -7,8 +7,8 @@ from dotenv import load_dotenv
 load_dotenv()
 
 """posgresql connection"""
-USER = os.getenv("POSTGRES_USER")
-PASSWORD = os.getenv("POSTGRES_PASSWORD")
+USER = os.getenv('POSTGRES_USER')
+PASSWORD = os.getenv('POSTGRES_PASSWORD')
 
 pg = create_engine(f'postgresql://{USER}:{PASSWORD}@postgresdb:5432/twitterdb', echo=True)
 
@@ -21,13 +21,13 @@ while True:
         tweet= str(i[0])
         sentiment=(i[1])
         if sentiment <= 0.3:
-            sentiment = 'positive'
+            sentiment = 'negative'
         elif sentiment > 0.3 and sentiment <= 0.6:
             sentiment = 'neutral'
         elif sentiment > 0.6:
-            sentiment = 'negative'
+            sentiment = 'positive'
 
         webhook_url = os.getenv('WEBHOOK_URL')
         slackdata= {'text':tweet+ "\n" + "...THE SENITMENT OF THIS TWEET IS ..:" + sentiment}
         requests.post(url= webhook_url, json = slackdata)
-        time.sleep(3600)
+        time.sleep(60)

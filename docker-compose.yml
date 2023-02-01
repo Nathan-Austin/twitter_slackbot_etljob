@@ -19,10 +19,8 @@ services:
     image: postgres
     ports:
     - "5556:5432"
-    environment:
-    - POSTGRES_USER=postgres
-    - POSTGRES_PASSWORD=xxxx
-    - POSTGRES_DB=twitterdb
+    env_file:
+      - .env
 
   etl:
     build: etl_job/
@@ -31,6 +29,8 @@ services:
     depends_on:
     - mongodb
     - postgres
+    env_file:
+    - .env
 
   slackbot:
     build: slackbot/

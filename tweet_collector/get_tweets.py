@@ -54,4 +54,4 @@ while True:
     for tweet in cursor:
         db.tweets.insert_one(dict(tweet))
         print(tweet.text+'\n')
-    time.sleep(3600)
+    time.sleep(60)
