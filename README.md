@@ -1,4 +1,4 @@
-# twitter_slackbot_etljob
+# twitter slackbot etljob w/ sentiment analysis
 A Dockerized twitter slackbot that reposts tweets about the AllBlacks (NZ Rugby) from twitter to slack using MongoDB to interact with the Twitter API and a PostgreSQL database.
 
 ![image](https://user-images.githubusercontent.com/105222741/216148400-a96b278a-2a97-4796-b58c-cb05f5ae8d85.png)
@@ -72,9 +72,10 @@ Select a channel where you want to post messages and click on Allow
 Scroll down and copy the Webohook URL into the code:
   
 
-### Then in the terminal run:
+### In the terminal run:
 
 > docker-compose build
+
 > docker-compose up
 
 This will start the container. 
